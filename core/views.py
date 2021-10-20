@@ -1,17 +1,10 @@
 from django.contrib.auth import  login
 from django.shortcuts import redirect, render
-from django.contrib.auth.decorators import login_required
 from . import forms
 
 
 # Create your views here.
 def home(request):
-    return render(request,'home.html')
-@login_required
-def coustmer_page(request):
-    return render(request,'home.html')
-@login_required
-def courier_page(request):
     return render(request,'home.html')
 def sign_up(request):
     form = forms.SignUPForm()

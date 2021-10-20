@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 @receiver(post_save, sender=User)
-def send_welcome_email(sender,instance,created,**kwargs):
+def send_welcome_email(sender, instance, created, **kwargs):
   if created and instance.email:
       body=render_to_string(
           'welcome_email_template.html',
@@ -13,10 +13,10 @@ def send_welcome_email(sender,instance,created,**kwargs):
               'name':instance.get_full_name()
           }
       )
-  send_mail(
-    'Welcome To Fast Parcel',
-     body,
-     settings.DEFAULT_FROM_EMAIL,
-     [instance.email],
-     fail_silently=False,
+      send_mail(
+         'Welcome To Fast Parcel',
+        body,
+        settings.DEFAULT_FROM_EMAIL,
+        [instance.email],
+        fail_silently=False,
      )
