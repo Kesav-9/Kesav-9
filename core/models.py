@@ -46,7 +46,7 @@ class Job(models.Model):
     (COMPLETED_STATUS, 'Completed'),
     (CANCELED_STATUS, 'Canceled'),
   )
-
+#step1
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
   name = models.CharField(max_length=255)
@@ -58,6 +58,39 @@ class Job(models.Model):
 
   status = models.CharField(max_length=20, choices=STATUSES, default=CREATING_STATUS)
   created_at = models.DateTimeField(default=timezone.now)
+#step2
+  pickup_address=models.CharField(max_length=255,blank=True)
+  pickup_lat=models.FloatField(default=0)
+  pickup_lng=models.FloatField(default=0)
+  pickup_name=models.CharField(max_length=255,blank=True)
+  pickup_phone=models.CharField(max_length=50,blank=True)
 
-  def __str__(self):
+
+  delivery_address=models.CharField(max_length=255,blank=True)
+  delivery_lat=models.FloatField(default=0)
+  delivery_lng=models.FloatField(default=0)
+  delivery_name=models.CharField(max_length=255,blank=True)
+  delivery_phone=models.CharField(max_length=50,blank=True)
+
+  duration=models.IntegerField(default=0)
+  distance=models.FloatField(default=0)
+  price=models.FloatField(default=0)
+
+  pickup_photo=models.ImageField(upload_to='job/pickup_photos/',null=True,blank=True)
+  pickedup_at=models.DateField(null=True,blank=True)
+
+  delivery_photo=models.ImageField(upload_to='job/delivery_photos/',null=True,blank=True)
+  delivered_at=models.DateField(null=True,blank=True)
+  
+
+
+def __str__(self):
     return self.name
+
+class Transaction(models.Model):
+  stripe_payment_intent_id=models.CharField(max_length=255,unique=True)
+  job=models.ForeignKey(Job,on_delete=models.CASCADE)
+  amount=models.FloatField(default=0)
+  created_at=models.DateTimeField(default=timezone.now)
+def __str__(self):
+    return self.stripe_payment_intent_id
