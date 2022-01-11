@@ -19,6 +19,7 @@ from django.contrib.auth import views as auth_views
 from core import views
 from core.customer import views as customer_views 
 from core.courier import views as courier_views 
+from core.courier import views as courier_views ,apis as courier_apis
 from django.conf import  settings
 from django.conf.urls.static import static
 
@@ -31,17 +32,15 @@ customer_urlpatterns = [
 
     path('jobs/current/',customer_views.current_jobs_page,name="current_jobs"),
     path('jobs/archived/',customer_views.archived_jobs_page,name="archived_jobs"),
-    path('jobs/<job_id>/',customer_views.job_page,name="job"),
-
-
-
-
-
-
+    path('jobs/<job_id>/',customer_views.job_page,name="job")
     
  ]
 courier_urlpatterns = [
-    path('',courier_views.home,name="home")
+    path('',courier_views.home,name="home"),
+    path('jobs/available/',courier_views.available_jobs_page,name="available_jobs"),
+    path('api/jobs/available/',courier_apis.available_jobs_api,name="available_jobs_api")
+
+
 ]
 
 urlpatterns = [
