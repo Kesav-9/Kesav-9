@@ -2,9 +2,8 @@
 {% load static %}
 {% block head %}
 
-<script
-    src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAP_API_KEY }}&callback=initMap&libraries=places&v=weekly"
-    defer></script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAP_API_KEY }}&callback=initMap&libraries=places&v=weekly"></script>
 <script>
     var pickupLat = parseFloat("{{ job.pickup_lat }}");
     var pickupLng = parseFloat("{{ job.pickup_lng }}");
@@ -153,7 +152,7 @@
 
             </div>
             <a href="{% url 'courier:current_job_take_photo' job.id %}" class="btn btn-block btn-warning btn-md mt-2">
-                Pickup
+                {% if job.status == 'picking' %} Pickup {% else %} Drop-off {% endif %}
             </a>
         </div>
     </div>

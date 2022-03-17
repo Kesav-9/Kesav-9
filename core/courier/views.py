@@ -40,8 +40,7 @@ def current_job_page(request):
     ).last()
     return render(request,'courier/current_job.html',{
         "job":job,
-        "GOOGLE_MAP_API_KEY":
-        settings.GOOGLE_MAP_API_KEY
+        "GOOGLE_MAP_API_KEY": settings.GOOGLE_MAP_API_KEY
     })
 @login_required(login_url="/sign-in/?next=/courier/")
 def current_job_take_photo_page(request,id):
